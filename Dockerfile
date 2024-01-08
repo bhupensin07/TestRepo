@@ -6,8 +6,9 @@ COPY src /workspace/src
 RUN mvn -version
 RUN java -version
 RUN mvn -B package --file pom.xml -DskipTests
+RUN mvn clean install
 
 FROM openjdk:17-slim
-COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
+COPY --from=build /workspace/target/EurakaServerDemo-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 6379
 ENTRYPOINT ["java","-jar","app.jar"]
